@@ -17,17 +17,24 @@ RUN  apt update&&apt upgrade -y &&apt install -y\
     libxinerama-dev\
     libxcursor-dev\
     libgtk2.0-0\
-    libgfortran4
+    libgfortran4\
+    && apt clean
 WORKDIR "/tmp/"
-RUN git clone https://github.com/glfw/glfw.git
-RUN chmod -R a+rwx glfw
-WORKDIR "/tmp/glfw"
-RUN cmake .&&make&&make install
+RUN git clone https://github.com/glfw/glfw.git&&\
+    chmod -R a+rwx glfw&&\
+    cd /tmp/glfw&&\
+    cmake .&&\
+    make&&\
+    make install&&\
+    cd /tmp/&&\
+    rm -rf /tmp/glfw
 
 RUN curl https://subversion.xray.aps.anl.gov/admin_pyGSAS/downloads/gsas2full-Latest-Linux-x86_64.sh > /tmp/gsas2full-Latest-Linux-x86_64.sh
 RUN bash /tmp/gsas2full-Latest-Linux-x86_64.sh -b -p /root/g2full
 WORKDIR "/tmp/pipinstall"
 COPY requirements.lock .
-RUN pip install pip -U&&pip install -r requirements.lock
-RUN apt clean&&pip cache purge&&rm -rf /tmp/
+RUN pip install pip -U&&\
+    pip install -r requirements.lock&&\
+    pip cache purge
+RUN rm -rf /tmp/
 WORKDIR /root/
