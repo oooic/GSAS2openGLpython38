@@ -1,0 +1,13 @@
+silx==0.15.2
+black
+bayesian-optimization
+icecream
+numpy >= 1.20
+scipy >= 1.6
+matplotlib >= 3.0
+scikit-learn
+pandas
+pymatgen
+pycifrw
+xraylarch
+pyspg
