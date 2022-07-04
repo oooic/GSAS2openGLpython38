@@ -29,4 +29,5 @@ RUN bash /tmp/gsas2full-Latest-Linux-x86_64.sh -b -p /root/g2full
 WORKDIR "/tmp/pipinstall"
 COPY requirements.lock .
 RUN pip install pip -U&&pip install -r requirements.lock
+RUN apt clean&&pip cache purge&&rm -rf /tmp/
 WORKDIR /root/
